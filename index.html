@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paw & Purr Pet Care</title>
+  <style>
+    :root {
+      --ink: #20302f;
+      --muted: #60706d;
+      --paper: #fbfaf6;
+      --panel: #ffffff;
+      --mint: #b8eadc;
+      --teal: #1c7d75;
+      --coral: #ef7564;
+      --gold: #f5bd4f;
+      --line: #dfe6e2;
+      --shadow: 0 18px 50px rgba(33, 49, 47, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 16px clamp(18px, 5vw, 64px);
+      background: rgba(251, 250, 246, 0.88);
+      border-bottom: 1px solid rgba(223, 230, 226, 0.8);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 850;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      color: #ffffff;
+      background: #f47aaa;
+      border-radius: 50%;
+      font-size: 20px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 3vw, 30px);
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 20px;
+      color: #ffffff;
+      background: var(--coral);
+      border: 0;
+      border-radius: 8px;
+      box-shadow: 0 10px 24px rgba(239, 117, 100, 0.28);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .button.secondary {
+      color: var(--teal);
+      background: #ffffff;
+      border: 1px solid var(--line);
+      box-shadow: none;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.98fr);
+      gap: clamp(24px, 4vw, 58px);
+      align-items: center;
+      padding: clamp(34px, 7vw, 82px) clamp(18px, 5vw, 64px) 42px;
+    }
+
+    .hero-copy {
+      max-width: 680px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 16px;
+      color: var(--teal);
+      font-size: 14px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin-bottom: 20px;
+      font-size: 92px;
+      line-height: 0.94;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      max-width: 620px;
+      margin-bottom: 28px;
+      color: var(--muted);
+      font-size: clamp(18px, 2vw, 22px);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 620px;
+    }
+
+    .stat {
+      padding: 16px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--teal);
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .photo-stack {
+      position: relative;
+      min-height: 520px;
+    }
+
+    .main-photo {
+      width: min(100%, 560px);
+      height: 520px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .floating-card {
+      position: absolute;
+      right: 0;
+      bottom: 32px;
+      width: min(300px, 72%);
+      padding: 14px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .floating-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+
+    .floating-card b {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .floating-card span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .band {
+      padding: 54px clamp(18px, 5vw, 64px);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 22px;
+      margin-bottom: 24px;
+    }
+
+    .section-head h2 {
+      max-width: 600px;
+      margin-bottom: 0;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      max-width: 450px;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .service {
+      min-height: 250px;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .service img {
+      width: 100%;
+      height: 132px;
+      object-fit: cover;
+    }
+
+    .service div {
+      padding: 18px;
+    }
+
+    .service h3 {
+      margin-bottom: 8px;
+      font-size: 20px;
+    }
+
+    .service p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .booking-band {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
+      gap: 26px;
+      align-items: stretch;
+      background: var(--mint);
+    }
+
+    .booking-copy {
+      align-self: center;
+    }
+
+    .booking-copy h2 {
+      margin-bottom: 14px;
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1.02;
+    }
+
+    .booking-copy p {
+      max-width: 500px;
+      color: #31504c;
+      font-size: 18px;
+    }
+
+    .booking {
+      display: grid;
+      gap: 14px;
+      padding: clamp(18px, 3vw, 28px);
+      background: #ffffff;
+      border: 1px solid rgba(32, 48, 47, 0.1);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 12px;
+      color: var(--ink);
+      background: #f8faf8;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    .products-band {
+      background: #ffffff;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 18px;
+    }
+
+    .feature-product,
+    .product-list {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .feature-product {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.9fr) minmax(0, 1fr);
+      background: #f6f3ea;
+    }
+
+    .feature-product img {
+      width: 100%;
+      height: 100%;
+      min-height: 330px;
+      object-fit: cover;
+    }
+
+    .feature-product div {
+      align-self: center;
+      padding: clamp(22px, 4vw, 44px);
+    }
+
+    .price {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 6px 10px;
+      color: #65480d;
+      background: var(--gold);
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .feature-product h3 {
+      margin-bottom: 12px;
+      font-size: clamp(26px, 3vw, 38px);
+      line-height: 1.05;
+    }
+
+    .feature-product p {
+      color: var(--muted);
+    }
+
+    .product-list {
+      display: grid;
+      background: #ffffff;
+    }
+
+    .product-row {
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .product-row:last-child {
+      border-bottom: 0;
+    }
+
+    .product-row img {
+      width: 90px;
+      height: 76px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .product-row h3 {
+      margin-bottom: 4px;
+      font-size: 18px;
+    }
+
+    .product-row p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .product-row strong {
+      color: var(--teal);
+      white-space: nowrap;
+    }
+
+    .team {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .person {
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .person img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .person div {
+      padding: 18px;
+    }
+
+    .person h3 {
+      margin-bottom: 4px;
+    }
+
+    .person p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .visit-band {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.78fr) minmax(320px, 1.22fr);
+      gap: 22px;
+      align-items: stretch;
+      background: #ffffff;
+      border-top: 1px solid var(--line);
+    }
+
+    .visit-card {
+      display: grid;
+      align-content: center;
+      gap: 16px;
+      padding: clamp(22px, 4vw, 34px);
+      background: #f6f3ea;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .visit-card h2 {
+      margin-bottom: 0;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.04;
+    }
+
+    .visit-card p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .address {
+      color: var(--teal);
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+    .map-frame {
+      width: 100%;
+      min-height: 380px;
+      overflow: hidden;
+      background: #eef4f1;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .map-frame iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 380px;
+      border: 0;
+    }
+
+    .footer {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+      padding: 30px clamp(18px, 5vw, 64px);
+      color: #d8e9e4;
+      background: #20302f;
+    }
+
+    .footer b {
+      color: #ffffff;
+    }
+
+    .footer span {
+      color: #b8ccc7;
+    }
+
+    @media (max-width: 980px) {
+      h1 {
+        font-size: 76px;
+      }
+
+      .hero,
+      .booking-band,
+      .products,
+      .visit-band,
+      .feature-product {
+        grid-template-columns: 1fr;
+      }
+
+      .photo-stack {
+        min-height: 430px;
+      }
+
+      .main-photo {
+        width: 100%;
+        height: 430px;
+      }
+
+      .services {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      h1 {
+        font-size: 60px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 28px;
+      }
+
+      .stats,
+      .services,
+      .form-grid,
+      .team {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .section-head h2 {
+        margin-bottom: 10px;
+      }
+
+      .floating-card {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        width: 100%;
+        margin-top: 14px;
+      }
+
+      .photo-stack {
+        min-height: auto;
+      }
+
+      .main-photo {
+        height: 340px;
+      }
+
+      .product-row {
+        grid-template-columns: 76px 1fr;
+      }
+
+      .product-row img {
+        width: 76px;
+        height: 70px;
+      }
+
+      .product-row strong {
+        grid-column: 2;
+      }
+
+      .footer {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="#">
+        <span class="brand-mark">P</span>
+        <span>Paw & Purr</span>
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#services">Services</a>
+        <a href="#shop">Shop</a>
+        <a href="#care-team">Care Team</a>
+        <a href="#visit">Visit</a>
+      </nav>
+      <a class="button" href="#book">Book</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Neighborhood pet care shop</p>
+          <h1>Grooming, treats, and gentle care under one roof.</h1>
+          <p>Drop in for a nail trim, schedule a wash day, or stock up on thoughtful food, toys, and daily essentials for cats and dogs.</p>
+          <div class="hero-actions">
+            <a class="button" href="#book">Reserve a Time</a>
+            <a class="button secondary" href="#shop">Browse Favorites</a>
+          </div>
+          <div class="stats" aria-label="Shop highlights">
+            <div class="stat">
+              <strong>4.9</strong>
+              <span>local rating</span>
+            </div>
+            <div class="stat">
+              <strong>25 min</strong>
+              <span>quick trims</span>
+            </div>
+            <div class="stat">
+              <strong>7 days</strong>
+              <span>open weekly</span>
+            </div>
+          </div>
+        </div>
+        <div class="photo-stack" aria-label="Happy dog after grooming">
+          <img class="main-photo" src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=1100&q=80" alt="A freshly groomed dog sitting happily indoors">
+          <div class="floating-card">
+            <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=700&q=80" alt="A calm cat looking toward the camera">
+            <b>Comfort-first appointments</b>
+            <span>Quiet handling, tidy stations, and pet-by-pet pacing.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="services">
+        <div class="section-head">
+          <h2>Everyday services for clean coats and easy routines.</h2>
+          <p>Choose a quick refresh or a full care session. Each visit includes a wellness glance and product notes tailored to your pet.</p>
+        </div>
+        <div class="services">
+          <article class="service">
+            <img src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=700&q=80" alt="Small dog at a grooming appointment">
+            <div>
+              <h3>Bath & Brush</h3>
+              <p>Gentle shampoo, blow dry, detangle, and a soft finishing brush.</p>
+            </div>
+          </article>
+          <article class="service">
+            <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=700&q=80" alt="Two dogs sitting together">
+            <div>
+              <h3>Nail Care</h3>
+              <p>Trims, filing, and paw balm for pets who need a lighter touch.</p>
+            </div>
+          </article>
+          <article class="service">
+            <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=700&q=80" alt="Cat looking toward camera">
+            <div>
+              <h3>Cat Refresh</h3>
+              <p>Brush-outs, sanitary trims, and mat checks in a low-stress space.</p>
+            </div>
+          </article>
+          <article class="service">
+            <img src="https://images.unsplash.com/photo-1601758174114-e711c0cbaa69?auto=format&fit=crop&w=700&q=80" alt="Dog enjoying a treat">
+            <div>
+              <h3>Treat Bar</h3>
+              <p>Single-ingredient snacks, birthday biscuits, and training bites.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="band booking-band" id="book">
+        <div class="booking-copy">
+          <h2>Plan the next visit in a minute.</h2>
+          <p>Tell us what your pet needs and we will match the appointment to their size, coat, and comfort level.</p>
+        </div>
+        <form class="booking">
+          <div class="form-grid">
+            <label>
+              Pet name
+              <input type="text" name="pet-name" placeholder="Mochi">
+            </label>
+            <label>
+              Pet type
+              <select name="pet-type">
+                <option>Dog</option>
+                <option>Cat</option>
+                <option>Small pet</option>
+              </select>
+            </label>
+            <label>
+              Service
+              <select name="service">
+                <option>Bath & Brush</option>
+                <option>Nail Care</option>
+                <option>Cat Refresh</option>
+                <option>Treat Bar Pickup</option>
+              </select>
+            </label>
+            <label>
+              Preferred day
+              <input type="date" name="date">
+            </label>
+            <label class="full">
+              Notes
+              <textarea name="notes" placeholder="Coat type, allergies, temperament, or favorite treats"></textarea>
+            </label>
+          </div>
+          <button class="button" type="button">Request Appointment</button>
+        </form>
+      </section>
+
+      <section class="band products-band" id="shop">
+        <div class="section-head">
+          <h2>Shop favorites picked for healthier daily care.</h2>
+          <p>Small-batch treats, enrichment toys, coat care, and home essentials that earn their shelf space.</p>
+        </div>
+        <div class="products">
+          <article class="feature-product">
+            <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=900&q=80" alt="Dog with a toy and pet supplies nearby">
+            <div>
+              <span class="price">Bundle from $34</span>
+              <h3>New Pet Welcome Kit</h3>
+              <p>A tidy starter set with a comfort toy, training treats, grooming wipes, and a simple feeding guide.</p>
+              <a class="button secondary" href="#book">Ask About Kits</a>
+            </div>
+          </article>
+          <div class="product-list" aria-label="Popular products">
+            <article class="product-row">
+              <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=400&q=80" alt="Dog treats">
+              <div>
+                <h3>Chicken Training Bites</h3>
+                <p>Soft, tiny, and simple for repeat rewards.</p>
+              </div>
+              <strong>$12</strong>
+            </article>
+            <article class="product-row">
+              <img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=400&q=80" alt="Pet brush">
+              <div>
+                <h3>Daily Coat Brush</h3>
+                <p>Rounded pins for quick home grooming.</p>
+              </div>
+              <strong>$18</strong>
+            </article>
+            <article class="product-row">
+              <img src="https://images.unsplash.com/photo-1601758123927-19662c6080c5?auto=format&fit=crop&w=400&q=80" alt="Dog wearing bandana">
+              <div>
+                <h3>Seasonal Bandanas</h3>
+                <p>Washable cotton prints in shop sizes.</p>
+              </div>
+              <strong>$9</strong>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="care-team">
+        <div class="section-head">
+          <h2>Care from people who read body language first.</h2>
+          <p>Our team keeps notes across visits, so shy pets, seniors, and first-timers can settle into a familiar routine.</p>
+        </div>
+        <div class="team">
+          <article class="person">
+            <img src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?auto=format&fit=crop&w=700&q=80" alt="Care specialist with a dog">
+            <div>
+              <h3>Maya</h3>
+              <p>Senior groomer for curly coats and nervous pups.</p>
+            </div>
+          </article>
+          <article class="person">
+            <img src="https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=700&q=80" alt="Cat resting calmly">
+            <div>
+              <h3>Leo</h3>
+              <p>Cat care lead with a quiet-room approach.</p>
+            </div>
+          </article>
+          <article class="person">
+            <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=700&q=80" alt="Dog smiling outside">
+            <div>
+              <h3>Nina</h3>
+              <p>Shop guide for nutrition, toys, and enrichment.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="band visit-band" id="visit">
+        <div class="visit-card">
+          <p class="eyebrow">Find us in Denver</p>
+          <h2>Stop by the shop.</h2>
+          <div class="address">1515 Wynkoop Street<br>Denver, Colorado</div>
+          <p>Open daily 8:00 AM to 7:00 PM for appointments, walk-in trims, and favorite treat restocks.</p>
+          <a class="button secondary" href="https://www.google.com/maps/search/?api=1&query=1515%20Wynkoop%20Street%2C%20Denver%2C%20Colorado" target="_blank" rel="noreferrer">Open Directions</a>
+        </div>
+        <div class="map-frame" aria-label="Map showing 1515 Wynkoop Street, Denver, Colorado">
+          <iframe
+            title="Map to Paw & Purr Pet Care at 1515 Wynkoop Street, Denver, Colorado"
+            src="https://www.google.com/maps?q=1515%20Wynkoop%20Street%2C%20Denver%2C%20Colorado&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>
+        <b>Paw & Purr Pet Care</b><br>
+        <span>1515 Wynkoop Street, Denver, Colorado · Open daily 8:00 AM to 7:00 PM</span>
+      </div>
+      <a class="button" href="#book">Book Visit</a>
+    </footer>
+  </div>
+</body>
+</html>
