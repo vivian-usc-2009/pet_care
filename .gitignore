@@ -1,0 +1,26 @@
+.DS_Store
+Thumbs.db
+
+# Logs and runtime output
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies and build output, if this page grows into an app later
+node_modules/
+dist/
+build/
+.parcel-cache/
+.vite/
+
+# Local editor and environment files
+.env
+.env.*
+.vscode/
+.idea/
+.repo.git/
+
+# Python local server/cache files
+__pycache__/
+*.py[cod]
